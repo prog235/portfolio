@@ -52,17 +52,17 @@ export const projects: Project[] = [
         { src: "/screenshots/unity_guided.png", alt: "Guided Freedom", label: "Guided Freedom", caption: "포괄적인 정보 요구에는 질문을 구체화하도록 유도해, 현재 진행도 밖의 정보가 공개되지 않도록 제어했습니다." },
       ],
       "problem": {
-        "summary": "기존의 많은 탈출 게임은 서사의 부재로 인해 플레이어가 몰입하기 어려웠고, 고정된 힌트는 플레이어의 상황에 맞는 도움을 제공하지 못했습니다.",
+        "summary": "제가 플레이한 기존의 많은 탈출 게임은 서사의 부재로 인해 플레이어가 몰입하기 어려웠고, 고정된 힌트는 플레이어의 상황에 맞는 도움을 제공하지 못했습니다.",
         "keyQuestion": "플레이어의 상황에 맞는 힌트를 제공하면서, 자연스럽게 서사적 경험을 전달할 수 있는 방법이 무엇일까?",
         "problems": [
           {
             "id": "no-story",
             "title": "서사의 부재로 인한 몰입도 하락",
-            "description": "기존의 많은 탈출 게임은 왜 탈출해야 하는가에 대한 정당성을 부여하지 못했고, 이는 몰입도의 하락으로 이어진다고 판단했습니다.",
+            "description": "서사가 부족한 게임은 플레이어가 왜 탈출해야 하는가에 대한 정당성을 부여하지 못하고, 이는 몰입도의 하락으로 이어진다고 판단했습니다.",
             "evidence": [
               {
                 "type": "observation",
-                "content": "기존의 많은 게임은 퍼즐 해결을 중심으로 진행되어, 사건의 배경을 자연스럽게 탐색할 수 있는 상호작용이 부족했습니다."
+                "content": "퍼즐 해결을 중심으로 진행되는 탈출 게임은 사건의 배경을 자연스럽게 탐색할 수 있는 상호작용이 부족했습니다."
               }
             ]
           },
@@ -243,7 +243,7 @@ export const projects: Project[] = [
     slug: "calmato-web",
     category: "PRODUCT × BRAND",
     title: "Calmato Web",
-    summary: "5만 구독자 채널 운영에서 발견한 문제를 사용자 참여형 웹 서비스와 브랜드 경험으로 확장했습니다.",
+    summary: "5만 명 이상 구독자 채널 운영에서 발견한 문제를 사용자 참여형 웹 서비스와 브랜드 경험으로 확장했습니다.",
     keywords: ["Problem Definition", "Product Design", "Brand Experience"],
     theme: "theme-brand",
     image: { src: "/calmato_mockup.png", alt: "calmato_web_mockup" },
