@@ -41,14 +41,24 @@ export function ProblemEvidenceItem({ evidence }: { evidence: ProblemEvidence })
         <p className="whitespace-pre-line text-sm leading-7 text-text-secondary">{evidence.content}</p>
       ) : null}
       {hasImage(evidence) && (
-        <div className="relative mt-4 aspect-video overflow-hidden rounded-button border border-border bg-background">
-          <Image
+        <div className={`mt-4 overflow-hidden rounded-button border border-border bg-background ${evidence.type === "screenshot" ? "" : "relative aspect-video"}`}>
+          {evidence.type === "screenshot" ? (
+            // Screenshots have unknown dimensions; let the browser use their intrinsic ratio.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={evidence.imageSrc!}
+              alt={evidence.imageAlt!}
+              loading="lazy"
+              decoding="async"
+              className="block h-auto w-full"
+            />
+          ) : <Image
             src={evidence.imageSrc!}
             alt={evidence.imageAlt!}
             fill
             sizes="(max-width: 767px) 100vw, 50vw"
             className="object-contain"
-          />
+          />}
         </div>
       )}
       {evidence.source?.trim() && <p className="mt-3 text-xs leading-6 text-text-secondary">출처: {evidence.source}</p>}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { projects, type Project } from "@/data/projects";
 import { calmatoChannel } from "@/data/calmato";
+import { siteConfig } from "@/config/site";
 import { Arrow } from "./site-shell";
 import { ProjectMedia } from "./media";
 
@@ -28,7 +29,7 @@ const perspectives = [
 export function PerspectiveSection() {
   return <section className="page-container section" aria-labelledby="perspective-heading">
     <p className="section-label eyebrow text-text-secondary">HOW I BUILD</p>
-    <h2 id="perspective-heading" className="section-heading mt-6">세 가지 관점으로 제품을 만듭니다.</h2>
+    <h2 id="perspective-heading" className="section-heading mt-6">세 가지 관점으로 설계합니다.</h2>
     <p className="mt-5 font-mono text-xs tracking-widest text-text-secondary">PROBLEM → DECISION → BUILD → LEARN</p>
     <div className="mt-12 grid gap-11 md:grid-cols-3 md:gap-10">{perspectives.map((item, index) => <div key={item.label} className={`${item.theme} perspective-item border-l-2 border-accent/40 py-5 pl-5 md:pl-6`}>
       <div className="mb-5 flex items-center justify-between">
@@ -65,7 +66,7 @@ export function ProjectGrid() {
     <p className="section-label eyebrow text-text-secondary">SELECTED WORK</p>
     <div className="flex flex-wrap items-end justify-between gap-6">
       <div>
-        <h2 id="projects-heading" className="section-heading mt-6 max-w-3xl">문제를 발견하고,<br className="sm:hidden" /> 구현하고, 평가한 경험</h2>
+        <h2 id="projects-heading" className="section-heading mt-6 max-w-3xl">발견하고,<br className="sm:hidden" /> 구현하고, 개선한 경험</h2>
       </div>
       <span className="font-mono text-xs text-text-secondary">03 CASE STUDIES</span>
     </div>
@@ -77,13 +78,16 @@ export function ProjectGrid() {
 export function CalmatoSection() {
   const channel = calmatoChannel;
   return <section id="calmato" className="section page-container anchor-section theme-brand" aria-labelledby="calmato-heading">
-    <p className="section-label eyebrow text-text-secondary">CONTENT & COMMUNITY</p>
+    <p className="section-label eyebrow text-text-secondary">BEYOND DEVELOPMENT</p>
     <h2 id="calmato-heading" className="section-heading mt-6 max-w-3xl">{channel.heading}</h2>
     <div className="mt-12 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
       <figure className="min-w-0">
-        <div className="relative aspect-video overflow-hidden rounded-card border border-border bg-surface">
-          {channel.image.src.trim() ? <Image src={channel.image.src} alt={channel.image.alt} fill sizes="(max-width: 1023px) 100vw, 600px" className="object-cover" /> :
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-accent-soft p-6 text-center">
+        <div className={`overflow-hidden rounded-card border border-border bg-surface ${channel.image.src.trim() ? "" : "relative aspect-video"}`}>
+          {channel.image.src.trim() ? <>
+            {/* Channel visuals vary in size, so preserve the source image's intrinsic ratio. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={channel.image.src} alt={channel.image.alt} loading="lazy" decoding="async" className="block h-auto w-full" />
+          </> : <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-accent-soft p-6 text-center">
               <span aria-hidden="true" className="text-4xl font-semibold tracking-tight text-accent-readable sm:text-5xl">Calmato</span>
               <p className="font-mono text-xs tracking-widest text-text-secondary">CHANNEL VISUAL</p>
               <p className="text-xs text-text-secondary">대표 이미지가 들어갈 자리입니다.</p>
@@ -92,7 +96,7 @@ export function CalmatoSection() {
         {channel.image.caption && <figcaption className="mt-3 text-sm text-text-secondary">{channel.image.caption}</figcaption>}
       </figure>
       <div className="min-w-0">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-surface">
             {channel.logo.src.trim() ? <Image src={channel.logo.src} alt={channel.logo.alt} fill sizes="64px" className="object-contain p-1" /> : <span className="font-mono text-[10px] tracking-widest text-text-secondary">LOGO</span>}
           </div>
@@ -105,31 +109,6 @@ export function CalmatoSection() {
         </dl>
         <p className="mt-7 text-xs text-text-secondary">담당 영역</p>
         <p className="mt-2 text-sm">{channel.role}</p>
-        {channel.channelUrl && <a href={channel.channelUrl} target="_blank" rel="noopener noreferrer" className="button-secondary mt-6 text-sm">YouTube 채널 보기 <Arrow /></a>}
-      </div>
-    </div>
-    <div className="mt-12">
-      <div className="mb-6 flex flex-wrap items-baseline justify-between gap-3">
-        <h3 className="text-lg font-semibold">음악과 콘텐츠</h3>
-        <p className="font-mono text-xs tracking-widest text-text-secondary">SELECTED CLIPS</p>
-      </div>
-      <div className="grid gap-6 md:grid-cols-3">
-        {channel.videos.map((video, index) => <figure key={video.id} className="min-w-0">
-          <div className="relative aspect-video overflow-hidden rounded-button border border-border bg-surface">
-            {video.src.trim() ? <video controls playsInline preload="none" poster={video.poster || undefined} aria-label={video.title || `Calmato 영상 ${index + 1}`} aria-describedby={video.description ? `${video.id}-description` : undefined} className="absolute inset-0 h-full w-full object-contain">
-              <source src={video.src} />
-              {video.captionsSrc && <track kind="captions" src={video.captionsSrc} srcLang="ko" label="한국어" default />}
-              브라우저가 동영상 재생을 지원하지 않습니다. <a href={video.src}>영상 다운로드</a>
-            </video> : <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 text-center">
-              <svg aria-hidden="true" viewBox="0 0 32 32" className="size-8 text-text-secondary" fill="none" stroke="currentColor"><rect x="3" y="6" width="26" height="20" rx="4" /><path d="m13 11 8 5-8 5z" /></svg>
-              <p className="font-mono text-[10px] tracking-widest text-text-secondary">VIDEO {String(index + 1).padStart(2, "0")} · 준비 중</p>
-            </div>}
-          </div>
-          <figcaption className="mt-4">
-            <p className="text-sm font-medium">{video.title || `콘텐츠 미리보기 ${String(index + 1).padStart(2, "0")}`}</p>
-            {video.description && <p id={`${video.id}-description`} className="mt-2 text-sm text-text-secondary">{video.description}</p>}
-          </figcaption>
-        </figure>)}
       </div>
     </div>
     <div className="mt-12 grid min-w-0 gap-8 sm:grid-cols-2">
@@ -144,18 +123,39 @@ export function CalmatoSection() {
           </div>
         </article>)}
     </div>
+    {channel.channelUrl && <div className="mt-10 flex">
+      <a href={channel.channelUrl} target="_blank" rel="noopener noreferrer" className="button-primary text-sm">YouTube로 이동하기 <Arrow /></a>
+    </div>}
   </section>;
 }
 
 export function AboutSection() {
   return <section id="about" className="section page-container anchor-section" aria-labelledby="about-heading">
     <p className="section-label eyebrow text-text-secondary">ABOUT</p>
-    <div className="mt-10 grid gap-8 md:grid-cols-[1fr_2fr]">
+    <div className="mt-10 grid items-start gap-10 md:grid-cols-[1fr_2fr] md:gap-12">
+      <div className="min-w-0">
+        <div className="relative aspect-square w-full max-w-64 overflow-hidden rounded-card border border-border bg-surface">
+          {siteConfig.profile.imageSrc.trim() ? <Image src={siteConfig.profile.imageSrc} alt={siteConfig.profile.imageAlt} fill sizes="256px" className="object-cover" /> : <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-text-secondary">
+            <svg aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-16"><circle cx="24" cy="16" r="8" /><path d="M9 42v-4a15 15 0 0 1 30 0v4" /></svg>
+            <span className="font-mono text-xs tracking-widest">PROFILE PHOTO</span>
+          </div>}
+        </div>
+        <ul className="mt-5 list-none space-y-1 p-0 text-sm">
+          <li><a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 max-w-full items-center gap-3 text-text-secondary hover:text-foreground" aria-label="GitHub 프로필">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="size-5 shrink-0"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.29-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.29-.5-1.43.11-2.98 0 0 .95-.3 3.09 1.15a10.78 10.78 0 0 1 5.62 0c2.15-1.45 3.09-1.15 3.09-1.15.61 1.55.23 2.69.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.32-2.64 5.27-5.15 5.55.4.35.76 1.03.76 2.08v3.11c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z" /></svg>
+            <span className="min-w-0 break-all">{siteConfig.links.github.replace(/^https?:\/\//, "")}</span>
+          </a></li>
+          <li><div className="flex min-h-11 items-center gap-3 text-text-secondary">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-5 shrink-0"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+            {siteConfig.profile.email.trim() ? <a href={`mailto:${siteConfig.profile.email}`} className="min-w-0 break-all hover:text-foreground">{siteConfig.profile.email}</a> : <span>이메일 입력 예정</span>}
+          </div></li>
+        </ul>
+      </div>
       <div className="max-w-3xl md:col-start-2">
-        <h2 id="about-heading" className="section-heading">기술을 사용자 가치로 연결하는 개발자</h2>
+        <h2 id="about-heading" className="section-heading">기술을 사용자 가치로 연결합니다.</h2>
         <p className="mt-7 text-text-secondary">컴퓨터공학을 전공하며 AI 시스템, 웹 서비스, 인터랙티브 콘텐츠를 직접 구현해 왔습니다. 기술 자체보다 어떤 문제를 해결하고 어떤 경험을 만들 수 있는지를 먼저 고민하며, 아이디어를 실제로 작동하는 형태까지 완성하는 과정을 좋아합니다.</p>
-        <p className="mt-5 text-text-secondary">음악 콘텐츠 채널 운영, LLM Agent 시스템 경량화, AI NPC 기반 게임 개발을 통해 문제 정의부터 구현, 안정화, 평가까지 서로 다른 제품 개발 과정을 경험했습니다.</p>
-        <ul className="mt-8 flex list-none flex-wrap gap-2 p-0">{["Problem Framing", "AI Prototyping", "Product Engineering", "User Experience"].map((keyword) => <li className="tag" key={keyword}>{keyword}</li>)}</ul>
+        <p className="mt-5 text-text-secondary">음악 콘텐츠 채널 운영, LLM Agent 시스템 경량화, AI NPC 기반 게임 개발을 통해 문제 정의부터 구현, 안정화, 평가까지 서로 다른 역량을 길러왔습니다.</p>
+        <ul className="mt-8 flex list-none flex-wrap gap-2 p-0">{["Problem Framing", "AI Prototyping", "User Experience"].map((keyword) => <li className="tag" key={keyword}>{keyword}</li>)}</ul>
       </div>
     </div>
   </section>;

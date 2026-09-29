@@ -4,6 +4,7 @@ import { projects, type Project, type TextBlock } from "@/data/projects";
 import { ProjectMedia } from "./media";
 import { Arrow } from "./site-shell";
 import { ProblemSection } from "./problem-section";
+import { ScreenshotGallery } from "./screenshot-gallery";
 
 function Content({ text }: { text?: string }) {
   return <p className={`whitespace-pre-line ${text?.trim() ? "text-text-secondary" : "empty-content"}`}>{text?.trim() || "Content will be added."}</p>;
@@ -88,6 +89,10 @@ export function ProjectNavigation({ project }: { project: Project }) {
 
 export function CaseStudy({ project }: { project: Project }) {
   const { problem, approach, howItWorks, challenges, results, next } = project.sections;
+  const screenshots = project.sections.screenshots?.filter((image) => image.src.trim() && image.alt.trim()) ?? [];
+  const video = project.sections.video;
+  const hasVideo = Boolean(video?.src.trim());
+  const hasMedia = hasVideo || screenshots.length > 0;
   const decisions = approach.decisions.length ? approach.decisions : Array.from({ length: 3 }, () => ({ title: "", body: "" }));
   const steps = howItWorks.steps.length ? howItWorks.steps : Array.from({ length: 3 }, () => ({ title: "", body: "" }));
   const issues = challenges.items.length ? challenges.items : [{ challenge: "", solution: "" }];
@@ -126,7 +131,29 @@ export function CaseStudy({ project }: { project: Project }) {
           <Content text={results.learning} />
         </div>
       </CaseStudySection>
-      <CaseStudySection id="next-steps" number="06" title="Limitations / Next Step">
+      {hasMedia && <CaseStudySection id="screenshots" number="06" title="In Action">
+        {hasVideo && video && <figure className="overflow-hidden rounded-card border border-border bg-surface">
+          <video
+            controls
+            playsInline
+            preload="metadata"
+            poster={video.poster?.trim() || undefined}
+            aria-label={video.title || `${project.title} 데모 영상`}
+            className="block h-auto w-full bg-background"
+            style={{ aspectRatio: "auto 16 / 9" }}
+          >
+            <source src={video.src} />
+            {video.captionsSrc?.trim() && <track kind="captions" src={video.captionsSrc} srcLang="ko" label="한국어" default />}
+            동영상을 재생할 수 없습니다. <a href={video.src}>영상 다운로드</a>
+          </video>
+          {(video.label?.trim() || video.caption?.trim()) && <figcaption className="flex flex-col gap-1 border-t border-border px-5 py-4 text-sm leading-7 sm:flex-row sm:items-baseline sm:gap-5 sm:px-6">
+            {video.label?.trim() && <span className="shrink-0 font-semibold text-accent-readable sm:max-w-[40%]">{video.label}</span>}
+            {video.caption?.trim() && <span className="min-w-0 text-text-secondary">{video.caption}</span>}
+          </figcaption>}
+        </figure>}
+        {screenshots.length > 0 && <ScreenshotGallery key={project.slug} images={screenshots} />}
+      </CaseStudySection>}
+      <CaseStudySection id="next-steps" number={hasMedia ? "07" : "06"} title="Limitations / Next Step">
         <div className="paired-grid grid gap-8 md:grid-cols-2">
           <div>
             <h3 className="mb-4 text-lg">Limitations</h3>

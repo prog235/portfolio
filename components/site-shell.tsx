@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { siteConfig } from "@/config/site";
 
 export function Arrow({ back = false }: { back?: boolean }) {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" className={back ? "rotate-180 shrink-0" : "shrink-0"}>
@@ -29,14 +28,9 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
-  const links = [
-    { label: "GitHub", href: siteConfig.links.github },
-    { label: "Resume", href: siteConfig.links.resume },
-    { label: "Contact", href: siteConfig.links.contact },
-  ].filter((link) => link.href.trim());
   return <footer className="border-t border-border py-8">
     <div className="page-container flex flex-wrap items-center justify-between gap-4 text-sm text-text-secondary">
-      <p>Designed and built by Sangho Lee.</p>{links.length > 0 && <nav aria-label="외부 링크" className="flex flex-wrap gap-6">{links.map((link) => <a className="nav-link" href={link.href} key={link.label}>{link.label}</a>)}</nav>}<span className="font-mono text-xs">© {new Date().getFullYear()}</span>
+      <p>Designed and built by Sangho Lee.</p><span className="font-mono text-xs">© {new Date().getFullYear()}</span>
     </div>
   </footer>;
 }

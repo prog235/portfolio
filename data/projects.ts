@@ -2,7 +2,8 @@ import type { ProblemSectionData } from "./problem";
 import agentTownImage from "@/public/agent_town_img.png";
 
 export type ProjectTheme = "theme-experience" | "theme-efficiency" | "theme-brand";
-export type ProjectImage = { src: string; alt: string; caption?: string };
+export type ProjectImage = { src: string; alt: string; label?: string; caption?: string };
+export type ProjectVideo = { src: string; title: string; poster?: string; label?: string; caption?: string; captionsSrc?: string };
 export type TextBlock = { title: string; body: string };
 export type ProjectSections = {
   problem: ProblemSectionData;
@@ -10,6 +11,8 @@ export type ProjectSections = {
   howItWorks: { body: string; diagram: ProjectImage; steps: TextBlock[] };
   challenges: { body: string; items: { challenge: string; solution: string }[] };
   results: { body: string; metrics: { label: string; value: string; context: string }[]; learning: string };
+  screenshots?: ProjectImage[];
+  video?: ProjectVideo;
   next: { limitations: string; steps: string };
 };
 export type Project = {
@@ -41,6 +44,13 @@ export const projects: Project[] = [
     image: { src: "/unity_img.png", alt: "unity_img" },
     metadata: { type: "개인 프로젝트", period: "2025.09 - 2025.12", role: "기획 및 개발, 음악 제작", stack: ["Unity", "C#", "FastAPI", "Python"] },
     sections: {
+      video: { src: "/screenshots/unity_play.mp4", title: "Unity 프로젝트 영상", poster: "", label: "Gameplay Demo", caption: "방 회전, 대화, 퍼즐 해결, 아이템 사용 기반의 포인트 앤 클릭 탈출 게임입니다", captionsSrc: "" },
+      screenshots: [
+        { src: "/screenshots/unity_narrative.png", alt: "Narrative Dialogue", label: "Narrative Dialogue", caption: "진행도(truthLevel)가 증가할수록 대화가 깊어지고 진실이 드러납니다" },
+        { src: "/screenshots/unity_hint.png", alt: "Contextual Hints", label: "Contextual Hints", caption: "동일한 퍼즐에 대해 질문하면 점진적으로 힌트를 제공합니다" },
+        { src: "/screenshots/unity_state.png", alt: "State-Synced", label: "State-Synced", caption: "NPC에게 선물을 주는 것처럼 특정 조건을 달성하면 진행 상태가 변화하고, 이는 다시 대화에 반영됩니다" },
+        { src: "/screenshots/unity_guided.png", alt: "Guided Freedom", label: "Guided Freedom", caption: "포괄적인 정보 요구에는 질문을 구체화하도록 유도해, 현재 진행도 밖의 정보가 공개되지 않도록 제어했습니다." },
+      ],
       "problem": {
         "summary": "기존의 많은 탈출 게임은 서사의 부재로 인해 플레이어가 몰입하기 어려웠고, 고정된 힌트는 플레이어의 상황에 맞는 도움을 제공하지 못했습니다.",
         "keyQuestion": "플레이어의 상황에 맞는 힌트를 제공하면서, 자연스럽게 서사적 경험을 전달할 수 있는 방법이 무엇일까?",
@@ -149,6 +159,11 @@ export const projects: Project[] = [
     image: { src: agentTownImage.src, alt: "agent_town_img", caption: "※ 프로젝트 실행 화면을 AI로 재구성한 이미지입니다. 실제 실행 화면과는 다릅니다." },
     metadata: { type: "팀 프로젝트", period: "2025.01 - 2025.04", role: "로컬 모델 통합 · 데이터 수집", stack: ["Python", "PyTorch"] },
     sections: {
+      // public/에 이미지를 넣고 경로와 alt를 작성하면 In Action 영역이 표시됩니다.
+      // caption은 선택 사항입니다. 여러 장은 아래 형식으로 추가하세요.
+      screenshots: [
+        // { src: "/screenshots/example.png", alt: "기능 실행 화면 설명", caption: "이 화면에서 확인할 수 있는 기능" },
+      ],
       problem: {
         summary: "NPC가 기억과 주변 상황을 바탕으로 계획·행동·대화를 생성하는 시뮬레이션으로, 행동을 결정할 때마다 LLM을 반복 호출했습니다. 이에 따른 API 과금과 응답 대기를 줄이고, 로컬 전환 이후의 추론 부담도 낮추고자 했습니다.", // 해결하려고 한 핵심 문제를 1~2문장으로 작성
         keyQuestion: "외부 API 의존을 줄이면서, 작은 로컬 모델로 기존 시뮬레이션을 얼마나 안정적으로 실행할 수 있을까?", // 선택: 프로젝트의 핵심 질문
@@ -234,36 +249,36 @@ export const projects: Project[] = [
     image: { src: "/calmato_mockup.png", alt: "calmato_web_mockup" },
     metadata: { type: "팀 프로젝트", period: "2025.06 - 현재", role: "기획 및 개발", stack: ["Next.js", "Supabase", "TypeScript"] },
     sections: {
+      screenshots: [
+        { src: "/screenshots/web_archive.png", alt: "Track Archive", label: "Track Archive", caption: "기획 의도와 함께 곡을 감상할 수 있습니다" },
+        { src: "/screenshots/web_mixer.png", alt: "Ambient Mixer", label: "Ambient Mixer", caption: "다양한 환경음을 자유롭게 조합해서 곡과 함께 감상할 수 있습니다" },
+        { src: "/screenshots/web_board.png", alt: "Community", label: "Community", caption: "사진과 글을 통해 구독자 간 자유로운 소통이 가능합니다" },
+        { src: "/screenshots/web_request.png", alt: "Request Page", label: "Request Page", caption: "신청곡 페이지를 통해 곡을 신청하고, 맘에 드는 곡을 추천할 수 있습니다" },
+        { src: "/screenshots/web_admin.png", alt: "Request Admin", label: "Request Admin", caption: "관리자 기능 중 곡 신청 관리 페이지입니다. 신청곡 순위를 확인하고 업로드 날짜를 입력할 수 있습니다" },
+      ],
       problem: {
-        summary: "유튜브에서 음악을 듣는 경험을 넘어, 구독자가 곡을 신청하고 이야기를 남기며 Calmato의 음악과 정서를 탐색할 공간이 필요했습니다.", // 해결하려고 한 핵심 문제를 1~2문장으로 작성
-        keyQuestion: "브랜드 정체성 강화, 구독자와의 활발한 소통, 채널 콘텐츠 아카이빙 등의 기능을 한데 모을 수 없을까?", // 선택: 프로젝트의 핵심 질문
+        summary: "유튜브만으로는 Calmato의 감상·브랜드 경험을 확장하기 어려웠고, 여러 채널과 수작업에 흩어진 참여·운영 흐름을 체계적으로 관리하기 어려웠습니다.", // 해결하려고 한 핵심 문제를 1~2문장으로 작성
+        keyQuestion: "Calmato의 음악적 정체성과 커뮤니티를 확장하면서, 구독자 참여와 운영 기능을 하나로 연결할 수 없을까?", // 선택: 프로젝트의 핵심 질문
         problems: [
           {
             id: "calmato-problem-01",
-            title: "음악 감상 이후의 참여 공간 부족", // 세부 문제 01 제목
-            description: "단순한 댓글로는 ", // 발생 상황과 사용자 또는 시스템에 미친 영향
+            title: "유튜브에 갇힌 감상·브랜드 경험", // 세부 문제 01 제목
+            description: "사용자는 영상에 포함된 ASMR만 들을 수 있었고, 곡과 환경음의 밸런스를 조절할 수 없었습니다. 댓글 역시 사진과 이야기를 자유롭게 나누기 어려워 Calmato 특유의 위로와 소통 경험을 확장하는 데 한계가 있었습니다.", // 발생 상황과 사용자 또는 시스템에 미친 영향
             evidence: [
-              {
-                type: "observation", // 실제 근거에 맞게 유형 변경 가능
-                label: "", // 선택: 근거의 짧은 제목
-                content: "채널에는 음악 감상과 댓글 기능이 있었지만, 곡 신청·게시판·개인화된 감상을 연결하는 독립적인 공간은 부족했습니다.", // 이 문제를 확인한 근거
-                source: "", // 선택: 관찰 기록, 측정 조건 또는 발언 출처
-              },
+              { type: "screenshot", content: "환경음 구성과 음량에 대한 서로 다른 선호", imageSrc: "/comments.png", imageAlt: "comment1" },
             ],
           },
           {
             id: "calmato-problem-02",
-            title: "유튜브 플랫폼의 한계", // 세부 문제 02 제목
-            description: "유튜브 플랫폼만으로는 영상과 음악에 담긴 기획 의도를 전달하기 어려웠고, 구독자의 신청곡 관리가 어렵다는 문제가 있었습니다.",
+            title: "분산된 운영과 단절된 신청 흐름",
+            description: "여러 영상에 흩어진 신청곡을 수합·집계해 제작 우선순위를 정하기 어려웠고, 신청자는 자신이 요청한 곡의 제작 진행 상황을 확인할 수 없었습니다. 썸네일 역시 요청마다 이메일로 전달해 반복적인 운영 부담이 발생했습니다.",
             evidence: [
               {
                 type: "quote",
                 label: "",
-                content: "곡 신청이 여러 영상에 분산되어 있어 집계와 관리가 어려워요. 그리고 우리의 영상에 담긴 의도를 전달하는 아카이브가 있으면 좋을 거 같아요.",
+                content: "곡 신청이 여러 영상에 분산되어 있어 집계와 관리가 어려워요. 신청곡을 계속 기다리실까봐 걱정도 됩니다. 썸네일 이미지 요청에 일일이 이메일로 전송하는 것도 번거롭게 느껴집니다.",
                 source: "Calmato 운영/영상 담당 팀원",
               },
-              // 캡처가 준비되면 주석을 해제하고 경로와 대체 텍스트를 입력하세요.
-              // { type: "screenshot", content: "", imageSrc: "", imageAlt: "" },
             ],
           },
         ],

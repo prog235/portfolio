@@ -3,9 +3,9 @@ import { AboutSection, CalmatoSection, HeroSection, PerspectiveSection, ProjectG
 export default function Home() {
   return <main id="main-content" tabIndex={-1}>
     <HeroSection />
+    <AboutSection />
     <PerspectiveSection />
     <ProjectGrid />
     <CalmatoSection />
-    <AboutSection />
   </main>;
 }
