@@ -70,7 +70,7 @@ export function ProjectGrid() {
       </div>
       <span className="font-mono text-xs text-text-secondary">03 CASE STUDIES</span>
     </div>
-    <p className="mt-5 max-w-2xl text-text-secondary">각 프로젝트는 AI Product Builder에게 필요한 서로 다른 판단과 실행 경험을 담고 있습니다.</p>
+    <p className="mt-5 max-w-2xl text-text-secondary">AI의 효율, 사용자 경험, 서비스 운영이라는 세 가지 문제를 직접 정의하고 해결했습니다.</p>
     <div className="project-grid mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">{projects.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} />)}</div>
   </section>;
 }
