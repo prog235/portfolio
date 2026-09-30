@@ -8,7 +8,7 @@ export const calmatoChannel = {
   audienceLabel: "구독자 규모",
   role: "음악 콘텐츠 제작 · 지표 분석 · 콘텐츠 개선",
   // public/calmato/에 파일을 넣고 /calmato/파일명 형식으로 입력하세요.
-  logo: { src: "/Calmato_profile.svg", alt: "Calmato 채널 로고" },
+  logo: { src: "/Calmato_Profile.svg", alt: "Calmato 채널 로고" },
   image: { src: "/Calmato_youtube.png", alt: "Calmato 채널 대표 이미지", caption: "" },
   cases: [
     {
